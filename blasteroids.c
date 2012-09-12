@@ -16,7 +16,7 @@ void updateShip(void) {
    * Pushed the matrix, so specify rotation INCREMENT
    */
   glPushMatrix();
-  glRotatef(s.rotSpeed * dt, 0.0, 0.0, 1.0);
+  glRotatef(s.rotateDir * s.rotSpeed * dt, 0.0, 0.0, 1.0);
 
   glEnableClientState(GL_VERTEX_ARRAY);
   glVertexPointer(2, GL_FLOAT, 0, s.coords);
@@ -61,15 +61,27 @@ void processNormalKeys(unsigned char key, int x, int y) {
 }
 
 void processSpecialKeys(int key, int x, int y) {
-  float fraction = 0.1;
   switch (key) {
     case GLUT_KEY_LEFT:
-      s.rotatingLeft = 1;
-      s.rotatingRight = 0;
+      s.rotateDir = 1;
       break;
     case GLUT_KEY_RIGHT:
-      s.rotatingLeft = 0;
-      s.rotatingRight = 1;
+      s.rotateDir = -1;
+      break;
+    case GLUT_KEY_UP:
+      break;
+    case GLUT_KEY_DOWN:
+      break;
+  }
+}
+
+void processSpecialUpKeys(int key, int x, int y) {
+  switch (key) {
+    case GLUT_KEY_LEFT:
+      s.rotateDir = 0;
+      break;
+    case GLUT_KEY_RIGHT:
+      s.rotateDir = 0;
       break;
     case GLUT_KEY_UP:
       break;
@@ -91,6 +103,7 @@ int main(int argc, char **argv) {
   glutIgnoreKeyRepeat(1);
   glutKeyboardFunc(processNormalKeys);
   glutSpecialFunc(processSpecialKeys);
+  glutSpecialUpFunc(processSpecialUpKeys);
 
   setup_data();
   CURRENT_TIME = glutGet(GLUT_ELAPSED_TIME);

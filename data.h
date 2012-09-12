@@ -9,8 +9,7 @@ struct _vertex {
 typedef struct _vertex vertex;
 
 struct _ship {
-  int rotatingLeft;
-  int rotatingRight;
+  int rotateDir;
   int movingForward;
   int movingBackward;
   int accelerating;
