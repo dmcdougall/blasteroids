@@ -17,6 +17,7 @@ struct _ship {
   float dirAngle;
   float speedx;
   float speedy;
+  float maxSpeed;
   float posx;
   float posy;
   float acceleration;

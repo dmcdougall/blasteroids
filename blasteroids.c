@@ -10,22 +10,22 @@ float PREV_TIME = 0.0;
 float dt = 0.0;
 
 void updateShip(void) {
-  float angrad = s.dirAngle * M_PI / 180.0;
-  float dirx = -sin(angrad);
-  float diry = cos(angrad);
+  float angRad = s.dirAngle * M_PI / 180.0;
+  float dirx = -sin(angRad);
+  float diry = cos(angRad);
   float ax = s.acceleration * dirx;
   float ay = s.acceleration * diry;
-  float xinc = dt * s.speedx;
-  float yinc = dt * s.speedy;
+  float xInc = dt * s.speedx;
+  float yInc = dt * s.speedy;
+  float newXSpeed = s.speedx + dt * ax;
+  float newYSpeed = s.speedy + dt * ay;
+  float normSpeed = newXSpeed * newXSpeed + newYSpeed * newYSpeed;
 
   glPushMatrix();
 
   glTranslatef(s.posx, s.posy, 0.0);
   glRotatef(s.dirAngle, 0.0, 0.0, 1.0);
-  glTranslatef(-s.posx, -s.posy, 0.0);
-
-  glTranslatef(s.posx, s.posy, 0.0);
-  glTranslatef(s.posx + xinc, s.posy + yinc, 0.0);
+  glTranslatef(s.posx + xInc, s.posy + yInc, 0.0);
   glTranslatef(-s.posx, -s.posy, 0.0);
 
   glEnableClientState(GL_VERTEX_ARRAY);
@@ -38,9 +38,11 @@ void updateShip(void) {
   s.dirAngle += s.rotateDir * s.rotSpeed * dt;
   s.posx += dt * s.speedx;
   s.posy += dt * s.speedy;
-  if (s.accelerating) {
-    s.speedx += dt * ax;
-    s.speedy += dt * ay;
+
+  if (s.accelerating && normSpeed <= s.maxSpeed) {
+    printf("accelerating. speed is %f\n", normSpeed);
+    s.speedx = newXSpeed;
+    s.speedy = newYSpeed;
   }
 }
 
