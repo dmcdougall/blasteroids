@@ -39,10 +39,24 @@ void updateShip(void) {
   s.posx += dt * s.speedx;
   s.posy += dt * s.speedy;
 
-  if (s.accelerating && normSpeed <= s.maxSpeed) {
-    printf("accelerating. speed is %f\n", normSpeed);
-    s.speedx = newXSpeed;
-    s.speedy = newYSpeed;
+  if (s.posx > 480.0) {
+    s.posx -= 960.0;
+  }
+  if (s.posx < -480.0) {
+    s.posx += 960.0;
+  }
+  if (s.posy > 300.0) {
+    s.posy -= 600.0;
+  }
+  if (s.posy < -300.0) {
+    s.posy += 600.0;
+  }
+
+  if (s.accelerating) {
+    if (normSpeed <= s.maxSpeed) {
+      s.speedx = newXSpeed;
+      s.speedy = newYSpeed;
+    }
   }
 }
 
@@ -92,9 +106,6 @@ void processSpecialKeys(int key, int x, int y) {
       break;
     case GLUT_KEY_UP:
       s.accelerating = 1;
-      break;
-    case GLUT_KEY_DOWN:
-      s.accelerating = -1;
       break;
   }
 }
