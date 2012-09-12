@@ -2,9 +2,16 @@
 #include "data.h"
 
 void setup_data(void) {
-  s.numVertices = 3;
+  s.rotatingLeft = 0;
+  s.rotatingRight = 0;
+  s.movingForward = 0;
+  s.movingBackward = 0;
   s.accelerating = 0;
-  s.dir_angle = 0.0;
+
+  s.numVertices = 3;
+  s.dirAngle = 0.0;
+  s.speed = 0.0;
+  s.rotSpeed = 50.0;
   s.coords = (vertex *)malloc(sizeof(vertex) * s.numVertices);
 
   s.coords[0].x = -4.0;
