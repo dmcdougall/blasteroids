@@ -15,7 +15,11 @@ struct _ship {
   int accelerating;
   int numVertices;
   float dirAngle;
-  float speed;
+  float speedx;
+  float speedy;
+  float posx;
+  float posy;
+  float acceleration;
   float rotSpeed;
   vertex *coords;
 };

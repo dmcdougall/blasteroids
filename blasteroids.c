@@ -10,18 +10,38 @@ float PREV_TIME = 0.0;
 float dt = 0.0;
 
 void updateShip(void) {
-  s.dirAngle += s.rotSpeed * dt;
+  float angrad = s.dirAngle * M_PI / 180.0;
+  float dirx = -sin(angrad);
+  float diry = cos(angrad);
+  float ax = s.acceleration * dirx;
+  float ay = s.acceleration * diry;
+  float xinc = dt * s.speedx;
+  float yinc = dt * s.speedy;
 
-  /*
-   * Pushed the matrix, so specify rotation INCREMENT
-   */
   glPushMatrix();
-  glRotatef(s.rotateDir * s.rotSpeed * dt, 0.0, 0.0, 1.0);
+
+  glTranslatef(s.posx, s.posy, 0.0);
+  glRotatef(s.dirAngle, 0.0, 0.0, 1.0);
+  glTranslatef(-s.posx, -s.posy, 0.0);
+
+  glTranslatef(s.posx, s.posy, 0.0);
+  glTranslatef(s.posx + xinc, s.posy + yinc, 0.0);
+  glTranslatef(-s.posx, -s.posy, 0.0);
 
   glEnableClientState(GL_VERTEX_ARRAY);
   glVertexPointer(2, GL_FLOAT, 0, s.coords);
   glDrawArrays(GL_LINE_LOOP, 0, s.numVertices);
   glDisableClientState(GL_VERTEX_ARRAY);
+
+  glPopMatrix();
+
+  s.dirAngle += s.rotateDir * s.rotSpeed * dt;
+  s.posx += dt * s.speedx;
+  s.posy += dt * s.speedy;
+  if (s.accelerating) {
+    s.speedx += dt * ax;
+    s.speedy += dt * ay;
+  }
 }
 
 void renderScene() {
@@ -69,8 +89,10 @@ void processSpecialKeys(int key, int x, int y) {
       s.rotateDir = -1;
       break;
     case GLUT_KEY_UP:
+      s.accelerating = 1;
       break;
     case GLUT_KEY_DOWN:
+      s.accelerating = -1;
       break;
   }
 }
@@ -84,8 +106,10 @@ void processSpecialUpKeys(int key, int x, int y) {
       s.rotateDir = 0;
       break;
     case GLUT_KEY_UP:
+      s.accelerating = 0;
       break;
     case GLUT_KEY_DOWN:
+      s.accelerating = 0;
       break;
   }
 }

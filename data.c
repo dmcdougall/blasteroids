@@ -9,7 +9,9 @@ void setup_data(void) {
 
   s.numVertices = 3;
   s.dirAngle = 0.0;
-  s.speed = 0.0;
+  s.speedx = 0.0;
+  s.speedy = 0.0;
+  s.acceleration = 250.0;
   s.rotSpeed = 250.0;
   s.coords = (vertex *)malloc(sizeof(vertex) * s.numVertices);
 
@@ -19,4 +21,7 @@ void setup_data(void) {
   s.coords[1].y = 0.0;
   s.coords[2].x = 0.0;
   s.coords[2].y = 10.0;
+
+  s.posx = 0.0;
+  s.posy = 10.0 / 3.0;
 }
