@@ -5,24 +5,31 @@
 
 #include "data.h"
 
-void renderScene(void) {
-  int i;
+#define TIMERMSECS 17
+
+float CURRENT_TIME = 0.0;
+float PREV_TIME = 0.0;
+float dt = 0.0;
+float rotrate = 50.0;
+
+void renderScene(int value) {
+  PREV_TIME = CURRENT_TIME;
+  CURRENT_TIME = glutGet(GLUT_ELAPSED_TIME);
+  dt = (CURRENT_TIME - PREV_TIME) / 1000.0;
+
   glDisable(GL_DEPTH_TEST);
   glClear(GL_COLOR_BUFFER_BIT);
+
   glLoadIdentity();
+  glRotatef(s.dir_angle, 0.0, 0.0, 1.0);
   glEnableClientState(GL_VERTEX_ARRAY);
   glVertexPointer(2, GL_FLOAT, 0, s.coords);
   glDrawArrays(GL_LINE_LOOP, 0, s.numVertices);
   glDisableClientState(GL_VERTEX_ARRAY);
  
-  /* glBegin(GL_LINE_LOOP); */
-  /*   glVertex2f(-319.5, -199.5); */
-  /*   glVertex2f(-319.5, 200); */
-  /*   glVertex2f(320, 200); */
-  /*   glVertex2f(320, -199.5); */
-  /* glEnd(); */
-
   glutSwapBuffers();
+  glutPostRedisplay();
+  s.dir_angle += rotrate * dt;
 }
 
 void changeSize(int w, int h) {
@@ -60,18 +67,26 @@ void processSpecialKeys(int key, int x, int y) {
   }
 }
 
+void displayScene(void) {
+  renderScene(0);
+}
+
 int main(int argc, char **argv) {
   glutInit(&argc, argv);
   glutInitWindowPosition(100, 100);
   glutInitWindowSize(640, 400);
   glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
+
   glutCreateWindow("Blasteroids");
-  glutDisplayFunc(renderScene);
+  glutDisplayFunc(displayScene);
   glutReshapeFunc(changeSize);
-  glutIdleFunc(renderScene);
-  glutKeyboardFunc(processNormalKeys);
-  glutSpecialFunc(processSpecialKeys);
+
+  /* glutKeyboardFunc(processNormalKeys); */
+  /* glutSpecialFunc(processSpecialKeys); */
+
   setup_data();
+  CURRENT_TIME = glutGet(GLUT_ELAPSED_TIME);
   glutMainLoop();
+
   return 0;
 }
