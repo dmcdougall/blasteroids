@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <math.h>
 #include "data.h"
 
 void setup_data(void) {
@@ -25,4 +26,29 @@ void setup_data(void) {
 
   s.posx = 0.0;
   s.posy = 10.0 / 3.0;
+}
+
+roid* generate_roid(void) {
+  int i;
+  float theta, rad;
+  roid *r;
+
+  r = (roid *)malloc(sizeof(roid));
+
+  r->rotateDir = 1;
+  r->numVertices = 8;
+  r->dirAngle = 0.0;
+  r->speedx = 50.0;
+  r->speedy = 50.0;
+  r->posx = 250.0;
+  r->posy = 150.0;
+
+  for (i = 0; i < r->numVertices; i++) {
+    theta = 2.0f * M_PI * i / 8.0f;
+    rad = ((float)rand() / RAND_MAX) * 5.0f + 10.0f;
+    r->coords[i].x = rad * cos(theta) + r->posx;
+    r->coords[i].y = rad * sin(theta) + r->posy;
+  }
+
+  return r;
 }

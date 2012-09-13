@@ -27,7 +27,23 @@ struct _ship {
 
 typedef struct _ship ship;
 
+struct _roid {
+  int rotateDir;
+  int numVertices;
+  float dirAngle;
+  float speedx;
+  float speedy;
+  float maxSpeed;
+  float posx;
+  float posy;
+  float rotSpeed;
+  vertex *coords;
+};
+
+typedef struct _roid roid;
+
 ship s;
 void setup_data(void);
+roid* generate_roid(void);
 
 #endif
