@@ -28,7 +28,7 @@ void setup_data(void) {
   s.posy = 10.0 / 3.0;
 }
 
-roid* generate_roid(void) {
+roid* random_roid(void) {
   int i;
   float theta, rad;
   roid *r;
@@ -38,17 +38,19 @@ roid* generate_roid(void) {
   r->rotateDir = 1;
   r->numVertices = 8;
   r->dirAngle = 0.0;
-  r->speedx = 50.0;
-  r->speedy = 50.0;
-  r->posx = 250.0;
-  r->posy = 150.0;
+  r->speedx = ((float)rand() / RAND_MAX) * 200.0 - 100.0;
+  r->speedy = ((float)rand() / RAND_MAX) * 200.0 - 100.0;
+  r->rotSpeed = 200.0;
 
+  r->coords = (vertex *)malloc(sizeof(vertex) * r->numVertices);
   for (i = 0; i < r->numVertices; i++) {
-    theta = 2.0f * M_PI * i / 8.0f;
+    theta = 2.0f * M_PI * i / r->numVertices;
     rad = ((float)rand() / RAND_MAX) * 5.0f + 10.0f;
-    r->coords[i].x = rad * cos(theta) + r->posx;
-    r->coords[i].y = rad * sin(theta) + r->posy;
+    r->coords[i].x = rad * cos(theta);
+    r->coords[i].y = rad * sin(theta);
   }
+  r->posx = ((float)rand() / RAND_MAX) * 930.0 - 465.0;
+  r->posy = ((float)rand() / RAND_MAX) * 570.0 - 285.0;
 
   return r;
 }

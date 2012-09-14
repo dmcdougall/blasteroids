@@ -43,7 +43,8 @@ struct _roid {
 typedef struct _roid roid;
 
 ship s;
+roid *r;
 void setup_data(void);
-roid* generate_roid(void);
+roid* random_roid(void);
 
 #endif

@@ -60,6 +60,40 @@ void updateShip(void) {
   }
 }
 
+void updateRoid(void) {
+  float xInc = dt * r->speedx;
+  float yInc = dt * r->speedy;
+
+  glPushMatrix();
+
+  glTranslatef(r->posx + xInc, r->posy + yInc, 0.0);
+  glRotatef(r->dirAngle, 0.0, 0.0, 1.0);
+
+  glEnableClientState(GL_VERTEX_ARRAY);
+  glVertexPointer(2, GL_FLOAT, 0, r->coords);
+  glDrawArrays(GL_LINE_LOOP, 0, r->numVertices);
+  glDisableClientState(GL_VERTEX_ARRAY);
+
+  glPopMatrix();
+
+  r->dirAngle += r->rotateDir * r->rotSpeed * dt;
+  r->posx += xInc;
+  r->posy += yInc;
+
+  if (r->posx > 480.0) {
+    r->posx -= 960.0;
+  }
+  if (r->posx < -480.0) {
+    r->posx += 960.0;
+  }
+  if (r->posy > 300.0) {
+    r->posy -= 600.0;
+  }
+  if (r->posy < -300.0) {
+    r->posy += 600.0;
+  }
+}
+
 void renderScene() {
   PREV_TIME = CURRENT_TIME;
   CURRENT_TIME = glutGet(GLUT_ELAPSED_TIME);
@@ -70,6 +104,7 @@ void renderScene() {
   glClearColor(0.1, 0.1, 0.1, 1.0);
 
   updateShip();
+  updateRoid();
 
   glutSwapBuffers();
   glutPostRedisplay();
@@ -143,6 +178,7 @@ int main(int argc, char **argv) {
   glutSpecialUpFunc(processSpecialUpKeys);
 
   setup_data();
+  r = random_roid();
   CURRENT_TIME = glutGet(GLUT_ELAPSED_TIME);
   glutMainLoop();
 
