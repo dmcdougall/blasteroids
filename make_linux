@@ -8,4 +8,8 @@ OBJS = data.o blasteroids.o
 HEADERS = data.h
 
 blast: $(OBJS) $(HEADERS)
-	$(CC) $(OBJS) -o blast -framework GLUT -framework OpenGL
+	$(CC) $(OBJS) -o blast -lglut -lGL -lGLU
+
+clean:
+	rm -f ${OBJS}
+	rm -f blast
