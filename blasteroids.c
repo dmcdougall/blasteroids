@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <math.h>
 #include <GLUT/glut.h>
 
@@ -177,6 +178,7 @@ int main(int argc, char **argv) {
   glutSpecialFunc(processSpecialKeys);
   glutSpecialUpFunc(processSpecialUpKeys);
 
+  srand(time(NULL));
   setup_data();
   r = random_roid();
   CURRENT_TIME = glutGet(GLUT_ELAPSED_TIME);
