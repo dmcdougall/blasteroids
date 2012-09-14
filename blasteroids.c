@@ -2,7 +2,12 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
-#include <GLUT/glut.h>
+
+#ifdef _APPLE_
+#include <GL/glut.h>
+#else
+#include <GL/freeglut.h>
+#endif
 
 #include "data.h"
 
