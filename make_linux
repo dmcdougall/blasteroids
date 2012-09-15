@@ -4,7 +4,7 @@ LDFLAGS=-lm -framework GLUT -framework OpenGL
 %.o: %.c
 	$(CC) -c $< $(CFLAGS) -o $@
 
-OBJS = data.o blasteroids.o
+OBJS = data.o blasteroids.o collide.o
 HEADERS = data.h
 
 blast: $(OBJS) $(HEADERS)
