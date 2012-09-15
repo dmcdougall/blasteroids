@@ -27,7 +27,7 @@ void updateShip(void) {
   s.dirAngle += s.rotateDir * s.rotSpeed * dt;
   s.posx += dt * s.speedx;
   s.posy += dt * s.speedy;
-  printf("%f %f\n", s.speedx, s.speedy);
+
   if (s.accelerating) {
     s.speedx = newXSpeed;
     s.speedy = newYSpeed;
