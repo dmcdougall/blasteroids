@@ -29,10 +29,8 @@ void updateShip(void) {
 
   glPushMatrix();
 
-  glTranslatef(s.posx, s.posy, 0.0);
-  glRotatef(s.dirAngle, 0.0, 0.0, 1.0);
   glTranslatef(s.posx + xInc, s.posy + yInc, 0.0);
-  glTranslatef(-s.posx, -s.posy, 0.0);
+  glRotatef(s.dirAngle, 0.0, 0.0, 1.0);
 
   glEnableClientState(GL_VERTEX_ARRAY);
   glVertexPointer(2, GL_FLOAT, 0, s.coords);

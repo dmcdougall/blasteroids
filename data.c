@@ -18,14 +18,14 @@ void setup_data(void) {
   s.coords = (vertex *)malloc(sizeof(vertex) * s.numVertices);
 
   s.coords[0].x = -4.0;
-  s.coords[0].y = 0.0;
+  s.coords[0].y = -10.0 / 3.0;
   s.coords[1].x = 4.0;
-  s.coords[1].y = 0.0;
+  s.coords[1].y = -10.0 / 3.0;
   s.coords[2].x = 0.0;
-  s.coords[2].y = 10.0;
+  s.coords[2].y = 10 - (10.0 / 3.0);
 
   s.posx = 0.0;
-  s.posy = 10.0 / 3.0;
+  s.posy = 0.0;
 }
 
 roid* random_roid(void) {
