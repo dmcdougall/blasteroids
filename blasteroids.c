@@ -21,15 +21,21 @@ void updateShip(void) {
   float diry = cos(angRad);
   float ax = s.acceleration * dirx;
   float ay = s.acceleration * diry;
-  float xInc = dt * s.speedx;
-  float yInc = dt * s.speedy;
-  float newXSpeed = s.speedx + dt * ax;
-  float newYSpeed = s.speedy + dt * ay;
-  float normSpeed = newXSpeed * newXSpeed + newYSpeed * newYSpeed;
+  float newXSpeed = s.speedx + dt * ax - s.acceleration * s.speedx * dt / s.maxSpeed;
+  float newYSpeed = s.speedy + dt * ay - s.acceleration * s.speedy * dt / s.maxSpeed;
+
+  s.dirAngle += s.rotateDir * s.rotSpeed * dt;
+  s.posx += dt * s.speedx;
+  s.posy += dt * s.speedy;
+  printf("%f %f\n", s.speedx, s.speedy);
+  if (s.accelerating) {
+    s.speedx = newXSpeed;
+    s.speedy = newYSpeed;
+  }
 
   glPushMatrix();
 
-  glTranslatef(s.posx + xInc, s.posy + yInc, 0.0);
+  glTranslatef(s.posx, s.posy, 0.0);
   glRotatef(s.dirAngle, 0.0, 0.0, 1.0);
 
   glEnableClientState(GL_VERTEX_ARRAY);
@@ -38,10 +44,6 @@ void updateShip(void) {
   glDisableClientState(GL_VERTEX_ARRAY);
 
   glPopMatrix();
-
-  s.dirAngle += s.rotateDir * s.rotSpeed * dt;
-  s.posx += dt * s.speedx;
-  s.posy += dt * s.speedy;
 
   if (s.posx > 480.0) {
     s.posx -= 960.0;
@@ -54,13 +56,6 @@ void updateShip(void) {
   }
   if (s.posy < -300.0) {
     s.posy += 600.0;
-  }
-
-  if (s.accelerating) {
-    if (normSpeed <= s.maxSpeed) {
-      s.speedx = newXSpeed;
-      s.speedy = newYSpeed;
-    }
   }
 }
 

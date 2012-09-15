@@ -12,7 +12,7 @@ void setup_data(void) {
   s.dirAngle = 0.0;
   s.speedx = 0.0;
   s.speedy = 0.0;
-  s.maxSpeed = 40000.0;
+  s.maxSpeed = 300.0;
   s.acceleration = 250.0;
   s.rotSpeed = 250.0;
   s.coords = (vertex *)malloc(sizeof(vertex) * s.numVertices);
