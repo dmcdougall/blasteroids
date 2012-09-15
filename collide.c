@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <math.h>
-#include <data.h>
+#include "data.h"
 
 vertex * tri_to_reference(const vertex *ref, const vertex *tri) {
   int i;
